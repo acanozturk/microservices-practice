@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 @AllArgsConstructor
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
-
 
     private final CurrencyExchangeRepository currencyExchangeRepository;
     private final Environment environment;
