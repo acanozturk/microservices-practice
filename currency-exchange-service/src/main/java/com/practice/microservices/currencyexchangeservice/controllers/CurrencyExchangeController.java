@@ -16,7 +16,7 @@ public class CurrencyExchangeController {
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange getConversionRate(@PathVariable final String from, @PathVariable final String to) {
 
-        return currencyExchangeService.getConversionRate(from, to);
+        return currencyExchangeService.getCurrencyConversion(from, to);
 
 
     }

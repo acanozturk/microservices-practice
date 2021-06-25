@@ -4,5 +4,5 @@ import com.practice.microservices.currencyconversionservice.models.CurrencyConve
 
 public interface CurrencyConversionService {
 
-    CurrencyConversion getCurrencyConversion(String from, String to, Double amount);
+    CurrencyConversion convertCurrencies(String from, String to, Double amount);
 }

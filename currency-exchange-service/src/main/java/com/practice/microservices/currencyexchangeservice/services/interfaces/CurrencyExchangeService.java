@@ -4,6 +4,6 @@ import com.practice.microservices.currencyexchangeservice.dtos.CurrencyExchange;
 
 public interface CurrencyExchangeService {
 
-    CurrencyExchange getConversionRate(String from, String to);
+    CurrencyExchange getCurrencyConversion(String from, String to);
 
 }

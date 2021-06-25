@@ -17,6 +17,6 @@ public class CurrencyConversionController {
     public CurrencyConversion getConversionRate(@PathVariable final String from, @PathVariable final String to,
             @PathVariable final Double amount) {
 
-       return currencyConversionService.getCurrencyConversion(from, to, amount);
+       return currencyConversionService.convertCurrencies(from, to, amount);
     }
 }

@@ -19,7 +19,7 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
     private final Environment environment;
 
     @Override
-    public CurrencyExchange getConversionRate(final String from, final String to) {
+    public CurrencyExchange getCurrencyConversion(final String from, final String to) {
         final CurrencyExchangeEntity currencyExchangeEntity =
                 currencyExchangeRepository.findCurrencyExchangeEntityByFromAndTo(from, to);
 

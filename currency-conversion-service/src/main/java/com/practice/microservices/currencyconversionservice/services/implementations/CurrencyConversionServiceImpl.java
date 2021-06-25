@@ -13,13 +13,13 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
     private final CurrencyExchangeProxy currencyExchangeProxy;
 
     @Override
-    public CurrencyConversion getCurrencyConversion(final String from, final String to, final Double amount) {
-        final CurrencyConversion currencyConversion = callExchangeService(from, to);
+    public CurrencyConversion convertCurrencies(final String from, final String to, final Double amount) {
+        final CurrencyConversion currencyConversion = callCurrencyExchangeService(from, to);
 
         return fillCurrencyConversionResponse(amount, currencyConversion);
     }
 
-    private CurrencyConversion callExchangeService(final String from, final String to) {
+    private CurrencyConversion callCurrencyExchangeService(final String from, final String to) {
 
         return currencyExchangeProxy.getConversionRate(from, to);
     }
