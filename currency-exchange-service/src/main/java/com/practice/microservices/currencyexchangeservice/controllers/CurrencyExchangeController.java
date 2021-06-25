@@ -1,6 +1,5 @@
 package com.practice.microservices.currencyexchangeservice.controllers;
 
-import com.practice.microservices.currencyexchangeservice.api.responses.CurrencyExchangeResponse;
 import com.practice.microservices.currencyexchangeservice.dtos.CurrencyExchange;
 import com.practice.microservices.currencyexchangeservice.services.interfaces.CurrencyExchangeService;
 import lombok.AllArgsConstructor;
@@ -15,13 +14,10 @@ public class CurrencyExchangeController {
     private final CurrencyExchangeService currencyExchangeService;
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
-    public CurrencyExchangeResponse getConversionRate(@PathVariable final String from, @PathVariable final String to) {
-        final CurrencyExchange currencyExchange = currencyExchangeService.getConversionRate(from, to);
+    public CurrencyExchange getConversionRate(@PathVariable final String from, @PathVariable final String to) {
 
-        final CurrencyExchangeResponse response = new CurrencyExchangeResponse();
+        return currencyExchangeService.getConversionRate(from, to);
 
-        response.setCurrencyExchange(currencyExchange);
 
-        return response;
     }
 }
