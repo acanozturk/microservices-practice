@@ -1,6 +1,6 @@
 package com.practice.microservices.currencyexchangeservice.services.interfaces;
 
-import com.practice.microservices.currencyexchangeservice.data.CurrencyExchange;
+import com.practice.microservices.currencyexchangeservice.dtos.CurrencyExchange;
 
 public interface CurrencyExchangeService {
 

@@ -1,6 +1,7 @@
 package com.practice.microservices.currencyexchangeservice.controllers;
 
-import com.practice.microservices.currencyexchangeservice.data.CurrencyExchange;
+import com.practice.microservices.currencyexchangeservice.api.responses.CurrencyExchangeResponse;
+import com.practice.microservices.currencyexchangeservice.dtos.CurrencyExchange;
 import com.practice.microservices.currencyexchangeservice.services.interfaces.CurrencyExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,13 @@ public class CurrencyExchangeController {
     private final CurrencyExchangeService currencyExchangeService;
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
-    public CurrencyExchange getConversionRate(@PathVariable final String from, @PathVariable final String to) {
+    public CurrencyExchangeResponse getConversionRate(@PathVariable final String from, @PathVariable final String to) {
+        final CurrencyExchange currencyExchange = currencyExchangeService.getConversionRate(from, to);
 
-        return currencyExchangeService.getConversionRate(from, to);
+        final CurrencyExchangeResponse response = new CurrencyExchangeResponse();
+
+        response.setCurrencyExchange(currencyExchange);
+
+        return response;
     }
 }

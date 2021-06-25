@@ -1,40 +1,39 @@
 package com.practice.microservices.currencyexchangeservice.services.implementations;
 
-import com.practice.microservices.currencyexchangeservice.data.CurrencyExchange;
+import com.practice.microservices.currencyexchangeservice.dtos.CurrencyExchange;
+import com.practice.microservices.currencyexchangeservice.entities.CurrencyExchangeEntity;
+import com.practice.microservices.currencyexchangeservice.repositories.CurrencyExchangeRepository;
 import com.practice.microservices.currencyexchangeservice.services.interfaces.CurrencyExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 @Service
 @AllArgsConstructor
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
+
+    private final CurrencyExchangeRepository currencyExchangeRepository;
     private final Environment environment;
 
     @Override
     public CurrencyExchange getConversionRate(final String from, final String to) {
+        final CurrencyExchangeEntity currencyExchangeEntity =
+                currencyExchangeRepository.findCurrencyExchangeEntityByFromAndTo(from, to);
+
+        return fillCurrencyExchangeResponse(currencyExchangeEntity);
+    }
+
+    private CurrencyExchange fillCurrencyExchangeResponse(final CurrencyExchangeEntity exchangeEntity) {
         final CurrencyExchange exchange = new CurrencyExchange();
 
-        exchange.setId(getRandomId());
-        exchange.setFrom(from);
-        exchange.setTo(to);
-        exchange.setConversionRate(getRandomConversionRate());
+        exchange.setId(exchangeEntity.getId());
+        exchange.setFrom(exchangeEntity.getFrom());
+        exchange.setTo(exchangeEntity.getTo());
+        exchange.setConversionRate(exchangeEntity.getConversionRate());
         exchange.setEnvironment(getCurrentEnvironment());
 
         return exchange;
-    }
-
-    private long getRandomId() {
-
-        return ThreadLocalRandom.current().nextLong(1, 10000);
-    }
-
-    private double getRandomConversionRate() {
-
-        return ThreadLocalRandom.current().nextDouble(1, 10);
     }
 
     private String getCurrentEnvironment() {
