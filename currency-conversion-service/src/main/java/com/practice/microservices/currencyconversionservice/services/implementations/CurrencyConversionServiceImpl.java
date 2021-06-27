@@ -3,6 +3,7 @@ package com.practice.microservices.currencyconversionservice.services.implementa
 import com.practice.microservices.currencyconversionservice.models.CurrencyConversion;
 import com.practice.microservices.currencyconversionservice.proxies.CurrencyExchangeProxy;
 import com.practice.microservices.currencyconversionservice.services.interfaces.CurrencyConversionService;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,15 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
         return fillCurrencyConversionResponse(amount, currencyConversion);
     }
 
+    @Retry(name = "currency-exchange", fallbackMethod = "fallbackResponse")
     private CurrencyConversion callCurrencyExchangeService(final String from, final String to) {
 
         return currencyExchangeProxy.getConversionRate(from, to);
+    }
+
+    private String fallbackResponse(final Exception exception) {
+
+        return "Fallback error";
     }
 
     private CurrencyConversion fillCurrencyConversionResponse(final Double amount,
