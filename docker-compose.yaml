@@ -12,6 +12,14 @@ services:
     networks:
       - currency-network
 
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks:
+      - currency-network
+
   currency-exchange:
     image: alico96/mp-currency-exchange-service:0.0.1-SNAPSHOT
     mem_limit: 700m
@@ -23,6 +31,7 @@ services:
       - naming-server
     environment:
       eureka.client.service-url.defaultZone: http://naming-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
 
   currency-conversion:
     image: alico96/mp-currency-conversion-service:0.0.1-SNAPSHOT
@@ -35,6 +44,7 @@ services:
       - naming-server
     environment:
       eureka.client.service-url.defaultZone: http://naming-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
 
   api-gateway:
     image: alico96/mp-api-gateway:0.0.1-SNAPSHOT
@@ -47,3 +57,4 @@ services:
       - naming-server
     environment:
       eureka.client.service-url.defaultZone: http://naming-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
