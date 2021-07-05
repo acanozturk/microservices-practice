@@ -1,0 +1,49 @@
+version: '3.7'
+
+networks:
+  currency-network:
+
+services:
+  naming-server:
+    image: alico96/mp-naming-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
+
+  currency-exchange:
+    image: alico96/mp-currency-exchange-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      eureka.client.service-url.defaultZone: http://naming-server:8761/eureka
+
+  currency-conversion:
+    image: alico96/mp-currency-conversion-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      eureka.client.service-url.defaultZone: http://naming-server:8761/eureka
+
+  api-gateway:
+    image: alico96/mp-api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      eureka.client.service-url.defaultZone: http://naming-server:8761/eureka

@@ -109,6 +109,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+
+                    <!-- Start of docker image config-->
+                    <image>
+                        <name>alico96/mp-${project.artifactId}:${project.version}</name>
+                    </image>
+                    <pullPolicy>IF_NOT_PRESENT</pullPolicy>
+                    <!-- End of docker image config-->
+
                 </configuration>
             </plugin>
         </plugins>
