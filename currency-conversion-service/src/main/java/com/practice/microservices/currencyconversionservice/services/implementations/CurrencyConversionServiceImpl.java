@@ -20,16 +20,16 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
         return fillCurrencyConversionResponse(amount, currencyConversion);
     }
 
-    @Retry(name = "currency-exchange", fallbackMethod = "fallbackResponse")
+    @Retry(name = "currency-exchange" /*fallbackMethod = "fallbackResponse"*/)
     private CurrencyConversion callCurrencyExchangeService(final String from, final String to) {
 
         return currencyExchangeProxy.getConversionRate(from, to);
     }
 
-    private String fallbackResponse(final Exception exception) {
-
-        return "Fallback error";
-    }
+//    private String fallbackResponse(final Exception exception) {
+//
+//        return "Fallback error";
+//    }
 
     private CurrencyConversion fillCurrencyConversionResponse(final Double amount,
             final CurrencyConversion currencyConversion) {
